@@ -17,6 +17,8 @@ import net.b07z.sepia.server.core.tools.JSON;
 import net.b07z.sepia.server.core.tools.SandboxSecurityPolicy;
 import net.b07z.sepia.server.mesh.endpoints.AuthEndpoints;
 import net.b07z.sepia.server.mesh.endpoints.ExampleEndpoints;
+import net.b07z.sepia.server.mesh.endpoints.PluginEndpoints;
+import net.b07z.sepia.server.mesh.plugins.PluginLoader;
 
 /**
  * Default Mesh-Node server with handling of configuration and server setup. 
@@ -53,6 +55,8 @@ public class MeshNode implements MeshNodeInterface {
 		post("/server-stats", (request, response) -> 	ExampleEndpoints.serverStats(request, response));
 		
 		post("/authentication", (request, response) -> 	AuthEndpoints.defaultAuthentication(request, response));
+		
+		post("/execute-plugin", (request, response) -> 	PluginEndpoints.executePlugin(request, response));
 	}
 
 	@Override
@@ -62,6 +66,9 @@ public class MeshNode implements MeshNodeInterface {
 		
 		//load statics and setup modules (loading stuff to memory etc.)
 		setupModules();
+		
+		//load plugins (if allowed)
+		loadPlugins();
 				
 		//setup server with port, CORS and error handling etc. 
 		setupServer();
@@ -207,6 +214,15 @@ public class MeshNode implements MeshNodeInterface {
 	 */
 	public void setupModules(){
 		ConfigNode.setupAuthModule();	//Authentication module
+	}
+	
+	/**
+	 * Load all plugins to class loader (if allowed).
+	 */
+	public void loadPlugins(){
+		if (ConfigNode.usePlugins){
+			PluginLoader.loadAllPlugins();
+		}
 	}
 
 }

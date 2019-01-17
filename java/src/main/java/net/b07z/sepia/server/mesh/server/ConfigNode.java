@@ -7,7 +7,9 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.b07z.sepia.server.core.data.Role;
 import net.b07z.sepia.server.core.tools.FilesAndStreams;
+import net.b07z.sepia.server.core.tools.Is;
 import net.b07z.sepia.server.core.tools.SandboxClassLoader;
 import net.b07z.sepia.server.core.users.AuthenticationAssistAPI;
 import net.b07z.sepia.server.mesh.endpoints.ExampleEndpoints;
@@ -43,6 +45,10 @@ public class ConfigNode {
 	public static boolean allowInternalCalls = false;				//**allow API-to-API authentication via cluster-key
 	public static boolean allowGlobalDevRequests = false;			//**restrict certain developer-specific requests to private network
 	
+	public static boolean usePlugins = false;						//use code loading on run-time
+	public static boolean pluginsRequireAuthentication = false;		//does plugin execution require authentication?
+	public static Role pluginsRequiredRole = Role.developer;		//required role to execute a plugin (only used when auth. required)
+	
 	//Modules and APIs to know
 	public static String assistEndpointUrl = "http://localhost:20721/";		//SEPIA Assist-API endpoint URL (e.g. for authentication)
 	public static String authenticationModule = AuthenticationAssistAPI.class.getCanonicalName();
@@ -51,18 +57,20 @@ public class ConfigNode {
 	
 	//to be used with SandboxClassLoader
 	
-	private static List<String> blackList;
+	private static List<String> blackList = new ArrayList<>();
 	/**
 	 * Setup sandbox for {@link SandboxClassLoader}.
 	 */
 	public static void setupSandbox(){
-		blackList = new ArrayList<>();
-		blackList.add(ConfigNode.class.getPackage().getName()); 	//server.*
+		blackList.add(ConfigNode.class.getPackage().getName()); 		//server.*
 		blackList.add(ExampleEndpoints.class.getPackage().getName());	//endpoints.*
 	}
 	public static void addToSandboxBlackList(String classOrPackageName){
     	blackList.add(classOrPackageName);
     }
+	public static List<String> getSandboxBlacklist(){
+		return blackList;
+	}
 	
 	//----------- Modules -----------
 	
@@ -90,6 +98,14 @@ public class ConfigNode {
 			allowInternalCalls = Boolean.valueOf(settings.getProperty("allow_internal_calls"));
 			allowGlobalDevRequests = Boolean.valueOf(settings.getProperty("allow_global_dev_requests"));
 			enableCORS = Boolean.valueOf(settings.getProperty("enable_CORS"));
+			
+			//plugin stuff
+			usePlugins = Boolean.valueOf(settings.getProperty("use_plugins"));
+			pluginsRequireAuthentication = Boolean.valueOf(settings.getProperty("plugins_require_authentication"));
+			String pluginsRequiredRoleString = settings.getProperty("plugins_required_user_role");
+			if (Is.notNullOrEmpty(pluginsRequiredRoleString)){
+				pluginsRequiredRole = Role.valueOf(pluginsRequiredRoleString);
+			}
 			
 			//webserver
 			hostFiles = Boolean.valueOf(settings.getProperty("host_files"));
@@ -124,6 +140,11 @@ public class ConfigNode {
 		settings.setProperty("allow_internal_calls", Boolean.toString(allowInternalCalls));
 		settings.setProperty("allow_global_dev_requests", Boolean.toString(allowGlobalDevRequests));
 		settings.setProperty("enable_CORS", Boolean.toString(enableCORS));
+		
+		//plugins stuff
+		settings.setProperty("use_plugins", Boolean.toString(usePlugins));
+		settings.setProperty("plugins_require_authentication", Boolean.toString(pluginsRequireAuthentication));
+		settings.setProperty("plugins_required_user_role", pluginsRequiredRole.name());
 		
 		//webserver
 		settings.setProperty("host_files", Boolean.toString(hostFiles));

@@ -8,6 +8,7 @@ import net.b07z.sepia.server.core.server.RequestPostParameters;
 import net.b07z.sepia.server.core.server.SparkJavaFw;
 import net.b07z.sepia.server.core.tools.Is;
 import net.b07z.sepia.server.core.tools.JSON;
+import net.b07z.sepia.server.mesh.server.ConfigNode;
 import spark.Request;
 import spark.Response;
 
@@ -71,8 +72,8 @@ public class ExampleEndpoints {
 			return SparkJavaFw.returnResult(request, response, msg.toJSONString(), 400);
 		}
 		
-		//Pseudo account check
-		boolean isValid = (username.equals("test") && password.equals("token"));
+		//Security check
+		boolean isValid = (username.equals(ConfigNode.localName) && password.equals(ConfigNode.localSecret));
 		
 		//Generate response
 		JSONObject msg = new JSONObject();
@@ -82,7 +83,7 @@ public class ExampleEndpoints {
 			return SparkJavaFw.returnResult(request, response, msg.toJSONString(), 200);
 		}else{
 			JSON.add(msg, "result", "fail");
-			JSON.add(msg, "error", "Authentication failed! Use 'username: test, password: token' for demo.");
+			JSON.add(msg, "error", "Authentication failed! Use 'username: server_local_name, password: server_local_secret'.");
 			return SparkJavaFw.returnResult(request, response, msg.toJSONString(), 401);
 		}
 	}

@@ -35,9 +35,8 @@ public class AuthEndpoints {
 	 * @param response - Spark {@link Response}
 	 */
 	public static String defaultAuthentication(Request request, Response response){
-		//Save some server statistics
-		BasicStatistics.addOtherApiHit("ep-authentication");
-		BasicStatistics.addOtherApiTime("ep-authentication", 1);
+		//Save some server statistics (A)
+		long tic = System.currentTimeMillis();
 		
 		//Prepare parameters from request body
 		RequestParameters params = new RequestPostParameters(request);
@@ -49,11 +48,19 @@ public class AuthEndpoints {
 		//Generate response
 		JSONObject msg = new JSONObject();
 		if (isValid){
+			//Save some server statistics (B1)
+			BasicStatistics.addOtherApiHit("ep-authentication");
+			BasicStatistics.addOtherApiTime("ep-authentication", tic);
+			
 			JSON.add(msg, "result", "success");
 			JSON.add(msg, "data", account.exportJSON());
 			return SparkJavaFw.returnResult(request, response, msg.toJSONString(), 200);
 		
 		}else{
+			//Save some server statistics (B2)
+			BasicStatistics.addOtherApiHit("ep-authentication-error");
+			BasicStatistics.addOtherApiTime("ep-authentication-error", tic);
+			
 			JSON.add(msg, "result", "fail");
 			JSON.add(msg, "error", "401 - Authentication failed!");
 			return SparkJavaFw.returnResult(request, response, msg.toJSONString(), 401);
