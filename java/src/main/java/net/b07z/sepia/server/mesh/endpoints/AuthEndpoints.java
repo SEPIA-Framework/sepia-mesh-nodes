@@ -127,7 +127,7 @@ public class AuthEndpoints {
 	private static void haltWithAuthError(Request request, Response response) {
 		halt(SparkJavaFw.returnResult(request, response, JSON.make(
 						"result", "fail", 
-						"error", "401 not authorized"
+						"error", "401 not authorized (or connection issue)"
 		).toJSONString(), 401));
 	}
 }

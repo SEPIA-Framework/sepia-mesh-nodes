@@ -57,6 +57,8 @@ public class MeshNode implements MeshNodeInterface {
 		post("/authentication", (request, response) -> 	AuthEndpoints.defaultAuthentication(request, response));
 		
 		post("/execute-plugin", (request, response) -> 	PluginEndpoints.executePlugin(request, response));
+		post("/upload-plugin", (request, response) -> 	PluginEndpoints.uploadPlugin(request, response));
+		post("/delete-plugin", (request, response) -> 	PluginEndpoints.deletePlugin(request, response));
 	}
 
 	@Override
@@ -217,11 +219,14 @@ public class MeshNode implements MeshNodeInterface {
 	}
 	
 	/**
-	 * Load all plugins to class loader (if allowed).
+	 * Load all plugins to class loader (if allowed). 
+	 * Cleans up target folder before (where the compiled classes land).
 	 */
 	public void loadPlugins(){
 		if (ConfigNode.usePlugins){
-			PluginLoader.loadAllPlugins();
+			boolean cleanUpBefore = true;
+			int total = PluginLoader.loadAllPlugins(cleanUpBefore);
+			log.info("Total plugins loaded: " + total);
 		}
 	}
 

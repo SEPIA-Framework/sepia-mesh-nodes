@@ -29,6 +29,8 @@ public class StartNode extends MeshNode {
 		//post("/authentication", (request, response) -> 	AuthEndpoints.defaultAuthentication(request, response));
 		
 		post("/execute-plugin", (request, response) -> 	PluginEndpoints.executePlugin(request, response));
+		post("/upload-plugin", (request, response) -> 	PluginEndpoints.uploadPlugin(request, response));
+		post("/delete-plugin", (request, response) -> 	PluginEndpoints.deletePlugin(request, response));
 		
 		//MODIFY THIS AS YOU PLEASE AND ADD YOUR OWN ENDPOINTS :-)
 	}
