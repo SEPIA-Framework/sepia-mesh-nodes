@@ -41,7 +41,7 @@ public class ConfigNode {
 	
 	public static String localName = "sepia-mesh-node";						//**user defined local server name
 	public static String localSecret = "123456";							//**user defined secret to validate local server
-	public static String clusterKey = "KantbyW3YLh8jTQPs5uzt2SzbmXZyphW";	//**one step of inter-API communication security
+	public static String meshId = "MESHbyW3YLh8jTQPs5uzt2SzbmXZyphW";		//**one step of inter-API communication security - similar to clusterKey
 	public static boolean allowInternalCalls = false;				//**allow API-to-API authentication via cluster-key
 	public static boolean allowGlobalDevRequests = false;			//**restrict certain developer-specific requests to private network
 	
@@ -94,7 +94,7 @@ public class ConfigNode {
 			localName = settings.getProperty("server_local_name");
 			localSecret = settings.getProperty("server_local_secret");
 			serverPort = Integer.valueOf(settings.getProperty("server_port"));
-			clusterKey = settings.getProperty("cluster_key");
+			meshId = settings.getProperty("mesh_id");
 			allowInternalCalls = Boolean.valueOf(settings.getProperty("allow_internal_calls"));
 			allowGlobalDevRequests = Boolean.valueOf(settings.getProperty("allow_global_dev_requests"));
 			enableCORS = Boolean.valueOf(settings.getProperty("enable_CORS"));
@@ -136,7 +136,7 @@ public class ConfigNode {
 		settings.setProperty("server_local_name", localName);
 		settings.setProperty("server_local_secret", localSecret);
 		settings.setProperty("server_port", Integer.toString(serverPort));
-		settings.setProperty("cluster_key", clusterKey);
+		settings.setProperty("mesh_id", meshId);
 		settings.setProperty("allow_internal_calls", Boolean.toString(allowInternalCalls));
 		settings.setProperty("allow_global_dev_requests", Boolean.toString(allowGlobalDevRequests));
 		settings.setProperty("enable_CORS", Boolean.toString(enableCORS));

@@ -86,7 +86,8 @@ public class AuthEndpoints {
 		
 		//check for intra-API call that does not require authentication again
 		boolean isInternalCall = ConfigNode.allowInternalCalls && 
-				Validate.validateInternalCall(request, params.getString("sKey"), ConfigNode.clusterKey); 
+				Validate.validateInternalCall(request, params.getString("sKey"), ConfigNode.meshId);  	
+				//NOTE: We don't use clusterKey here but meshID ... so the calling server needs to know this ID 
 		if (isInternalCall){
 			//NOTE:
 			

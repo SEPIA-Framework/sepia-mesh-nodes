@@ -131,9 +131,9 @@ public class MeshNode implements MeshNodeInterface {
 		JSONObject coreToolsConfig = JSON.make(
 				"defaultAssistAPI", ConfigNode.assistEndpointUrl,
 				"defaultAuthModule", ConfigNode.authenticationModule,
-				"privacyPolicy", ConfigNode.privacyPolicyLink,
-				"clusterKey", ConfigNode.clusterKey
+				"privacyPolicy", ConfigNode.privacyPolicyLink
 		);
+		JSON.put(coreToolsConfig, "clusterKey", "---");				//the Mesh-Node is not part of the cluster
 		JSON.put(coreToolsConfig, "defaultTeachAPI", "---"); 		//not required here but we need to set it
 		JSON.put(coreToolsConfig, "defaultAssistantUserId", "---");	//not required here but we need to set it
 		//part 2 (optional)
