@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 import net.b07z.sepia.server.core.tools.JSON;
 
 /**
- * The simplest plugin possible. Returns hello and request 'name' from request data.
+ * The simplest plugin possible. Uses the 'name' field from the request data and returns hello 'name'.
  * 
  * @author Florian Quirin
  */
