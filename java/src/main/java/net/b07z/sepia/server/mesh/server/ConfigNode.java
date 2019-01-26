@@ -39,6 +39,7 @@ public class ConfigNode {
 	public static boolean hostFiles = false;								//use web-server?
 	public static String privacyPolicyLink = "http://localhost:20780/privacy-policy.html";		//link to privacy policy in case you host files
 	
+	public static String accessPin = "123456";						//**user defined access pin for non-critical access e.g. to statistics
 	public static String localName = "sepia-mesh-node";						//**user defined local server name
 	public static String localSecret = "123456";							//**user defined secret to validate local server
 	public static String meshId = "MESHbyW3YLh8jTQPs5uzt2SzbmXZyphW";		//**one step of inter-API communication security - similar to clusterKey
@@ -91,6 +92,7 @@ public class ConfigNode {
 		try{
 			Properties settings = FilesAndStreams.loadSettings(confFile);
 			//server
+			accessPin = settings.getProperty("server_access_pin");
 			localName = settings.getProperty("server_local_name");
 			localSecret = settings.getProperty("server_local_secret");
 			serverPort = Integer.valueOf(settings.getProperty("server_port"));
@@ -133,6 +135,7 @@ public class ConfigNode {
 		//save all personal parameters
 		Properties settings = new Properties();
 		//server
+		settings.setProperty("server_access_pin", accessPin);
 		settings.setProperty("server_local_name", localName);
 		settings.setProperty("server_local_secret", localSecret);
 		settings.setProperty("server_port", Integer.toString(serverPort));

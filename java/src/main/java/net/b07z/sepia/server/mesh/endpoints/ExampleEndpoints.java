@@ -61,19 +61,18 @@ public class ExampleEndpoints {
 		
 		//Prepare parameters from request body
 		RequestParameters params = new RequestPostParameters(request);
-		String username = params.getString("username");
-		String password = params.getString("password");
+		String accessPin = params.getString("pin");
 		
 		//Check parameters
-		if (Is.nullOrEmpty(username) && Is.nullOrEmpty("password")) {
+		if (Is.nullOrEmpty(accessPin)){
 			JSONObject msg = new JSONObject();
 			JSON.add(msg, "result", "fail");
-			JSON.add(msg, "error", "Missing parameter 'username' or 'password'.");
+			JSON.add(msg, "error", "Missing parameter 'pin'.");
 			return SparkJavaFw.returnResult(request, response, msg.toJSONString(), 400);
 		}
 		
 		//Security check
-		boolean isValid = (username.equals(ConfigNode.localName) && password.equals(ConfigNode.localSecret));
+		boolean isValid = (accessPin.equals(ConfigNode.accessPin));
 		
 		//Generate response
 		JSONObject msg = new JSONObject();
@@ -83,7 +82,7 @@ public class ExampleEndpoints {
 			return SparkJavaFw.returnResult(request, response, msg.toJSONString(), 200);
 		}else{
 			JSON.add(msg, "result", "fail");
-			JSON.add(msg, "error", "Authentication failed! Use 'username: server_local_name, password: server_local_secret'.");
+			JSON.add(msg, "error", "Authentication failed! Please check 'pin'.");
 			return SparkJavaFw.returnResult(request, response, msg.toJSONString(), 401);
 		}
 	}
