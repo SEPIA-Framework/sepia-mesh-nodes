@@ -60,6 +60,44 @@
 					<finalName>sepia-mesh-node-v${project.version}</finalName>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-resources-1</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/release/Settings</outputDirectory>
+							<resources>          
+								<resource>
+									<directory>Settings</directory>
+									<!--<filtering>true</filtering>-->
+								</resource>
+							</resources>              
+						</configuration>            
+					</execution>
+					<execution>
+						<id>copy-resources-2</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/release/Plugins</outputDirectory>
+							<resources>          
+								<resource>
+									<directory>Plugins</directory>
+									<!--<filtering>true</filtering>-->
+								</resource>
+							</resources>              
+						</configuration>            
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
