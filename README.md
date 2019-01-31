@@ -2,7 +2,7 @@
 Part of the [SEPIA Framework](https://sepia-framework.github.io/)  
 
 <p align="center">
-  <img src="https://github.com/SEPIA-Framework/SEPIA-Framework.github.io/blob/master/img/SEPIA_mesh.png" alt="S.E.P.I.A. Mesh-Node"/>
+  <img src="https://github.com/SEPIA-Framework/SEPIA-Framework.github.io/blob/master/img/SEPIA_mesh.png" alt="S.E.P.I.A. Mesh-Node" width=350/>
 </p>
 
 SEPIA Mesh Nodes are small, lightweight servers that can be distributed in your network to run tasks securely.  
