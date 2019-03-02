@@ -53,6 +53,22 @@ public class PluginEndpoints {
 		//Prepare parameters from request body
 		RequestParameters params = new RequestPostParameters(request);
 		
+		//Restrictions
+		if (ConfigNode.pluginsRequireLocalhost){
+			//String host = request.host();
+			//System.out.println(host.startsWith("localhost") || host.startsWith("127.0.0.1"));
+			String ip = request.ip();
+			if (!ip.equals("0:0:0:0:0:0:0:1") && !ip.equals("127.0.0.1")){
+				return notAllowedResponse(request, response);
+			}
+		}
+		if (ConfigNode.pluginsRequirePin){
+			String accessPin = params.getString("pin");
+			if (Is.nullOrEmpty(accessPin) || !accessPin.equals(ConfigNode.accessPin)){
+				return notAllowedResponse(request, response);
+			}
+		}
+		
 		//Authenticate
 		String userId = "anonymous";
 		boolean isAllowed = true;

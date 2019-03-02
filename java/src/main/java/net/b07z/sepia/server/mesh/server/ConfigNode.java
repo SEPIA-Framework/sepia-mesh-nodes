@@ -49,6 +49,8 @@ public class ConfigNode {
 	public static boolean usePlugins = false;						//use code loading on run-time
 	public static boolean pluginsRequireAuthentication = false;		//does plugin execution require authentication?
 	public static Role pluginsRequiredRole = Role.developer;		//required role to execute a plugin (only used when auth. required)
+	public static boolean pluginsRequireLocalhost = false;			//only allow localhost plugin calls? (handy for client controls)
+	public static boolean pluginsRequirePin = false;				//ask for PIN when using a plugin?
 	
 	//Modules and APIs to know
 	public static String assistEndpointUrl = "http://localhost:20721/";		//SEPIA Assist-API endpoint URL (e.g. for authentication)
@@ -108,6 +110,8 @@ public class ConfigNode {
 			if (Is.notNullOrEmpty(pluginsRequiredRoleString)){
 				pluginsRequiredRole = Role.valueOf(pluginsRequiredRoleString);
 			}
+			pluginsRequireLocalhost = Boolean.valueOf(settings.getProperty("plugins_require_localhost", "false"));
+			pluginsRequirePin = Boolean.valueOf(settings.getProperty("plugins_require_pin", "false"));
 			
 			//webserver
 			hostFiles = Boolean.valueOf(settings.getProperty("host_files"));
@@ -148,6 +152,8 @@ public class ConfigNode {
 		settings.setProperty("use_plugins", Boolean.toString(usePlugins));
 		settings.setProperty("plugins_require_authentication", Boolean.toString(pluginsRequireAuthentication));
 		settings.setProperty("plugins_required_user_role", pluginsRequiredRole.name());
+		settings.setProperty("plugins_require_localhost", Boolean.toString(pluginsRequireLocalhost));
+		settings.setProperty("plugins_require_pin", Boolean.toString(pluginsRequirePin));
 		
 		//webserver
 		settings.setProperty("host_files", Boolean.toString(hostFiles));
