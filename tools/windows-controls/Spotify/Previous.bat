@@ -1,0 +1,1 @@
+..\SendMessage.exe /message:793 /lparam:786432 /processname:Spotify.exe /windowclass:Chrome_SystemMessageWindow
