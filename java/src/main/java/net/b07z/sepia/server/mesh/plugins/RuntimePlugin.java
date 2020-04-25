@@ -23,7 +23,8 @@ public class RuntimePlugin implements Plugin {
 		long timeout = JSON.getLongOrDefault(data, "timeout", 5000);
 		
 		if (Is.notNullOrEmpty(cmd)){
-			RuntimeResult cmdResult = RuntimeInterface.runCommand(Converters.jsonArrayToStringList(cmd), timeout);
+			boolean restrictCode = false;	//NOTE: change?
+			RuntimeResult cmdResult = RuntimeInterface.runCommand(Converters.jsonArrayToStringList(cmd), timeout, restrictCode);
 			
 			//Command finished without errors
 			if (cmdResult.getStatusCode() == 0){

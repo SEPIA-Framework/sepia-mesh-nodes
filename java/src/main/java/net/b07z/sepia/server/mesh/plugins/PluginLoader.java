@@ -46,7 +46,7 @@ public class PluginLoader {
 			pluginClassLoader = new SandboxClassLoader(
 					new File(ConfigNode.pluginsFolder + defaultTargetFolder), ConfigNode.getSandboxBlacklist());
 		}
-		Plugin plugin = (Plugin) pluginClassLoader.loadClass(pluginClassName).newInstance();
+		Plugin plugin = (Plugin) ClassBuilder.construct(pluginClassLoader, pluginClassName);
 		return plugin;
 	}
 	/**
