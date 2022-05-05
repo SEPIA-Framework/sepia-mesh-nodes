@@ -25,7 +25,7 @@ public class ConfigNode {
 	private static final Logger log = LoggerFactory.getLogger(ConfigNode.class);
 
 	public static final String SERVERNAME = "SEPIA-Mesh-Node"; 		//public server name
-	public static final String apiVersion = "v0.9.18";				//API version
+	public static final String apiVersion = "v0.9.19";				//API version
 	
 	//Server settings (port, web-server, folders etc.)
 	public static String settingsFolder = "Settings/";						//folder for settings
