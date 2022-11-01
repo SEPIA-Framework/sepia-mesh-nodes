@@ -3,7 +3,7 @@
 	
 	<groupId>net.b07z.sepia.server.mesh</groupId>
 	<artifactId>sepia-mesh-node</artifactId>
-	<version>0.9.19</version>
+	<version>0.10.0</version>
 	<name>SEPIA Mesh-Node</name>
 	<description>SEPIA Mesh Nodes are small, lightweight servers that can be distributed in your network to run tasks securely.</description>
 	<url>https://github.com/SEPIA-Framework/sepia-mesh-nodes</url>
@@ -18,8 +18,8 @@
 	
 	<properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
     </properties>
     
 	<build>
@@ -27,7 +27,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.3.0</version>
 				<executions>
 					<execution>
 						<id>copy-dependencies</id>
@@ -45,7 +45,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.2.2</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -62,7 +62,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.2.0</version>
 				<executions>
 					<execution>
 						<id>copy-resources-1</id>
@@ -102,7 +102,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M3</version>
+				<version>3.0.0-M7</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -111,14 +111,14 @@
 	    <dependency>
 	  		<groupId>net.b07z.sepia.server.core</groupId>
 	  		<artifactId>sepia-core-tools</artifactId>
-	  		<version>2.2.11</version>
+	  		<version>2.3.0</version>
 	  	</dependency>
 		
 		<!-- JUnit -->
 		<dependency>
       		<groupId>junit</groupId>
       		<artifactId>junit</artifactId>
-      		<version>4.13.1</version>
+      		<version>4.13.2</version>
       		<scope>test</scope>
     	</dependency>
     </dependencies>
